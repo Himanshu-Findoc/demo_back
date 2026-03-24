@@ -86,5 +86,21 @@ def get_redirect():
 
     return jsonify(response.json()), response.status_code
 
+@app.route("/portfolio", methods=["POST"])
+def get_portfolio():
+    data = request.json
+    access_token = data.get("access")
+
+    url = f"{BASE_URL}/portfolio/summary"
+
+    headers = {
+        "Authorization": f"Bearer {access_token}",
+        "x-api-key": API_KEY,
+    }
+
+    response = requests.get(url, headers=headers)
+
+    return jsonify(response.json()), response.status_code
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True)
